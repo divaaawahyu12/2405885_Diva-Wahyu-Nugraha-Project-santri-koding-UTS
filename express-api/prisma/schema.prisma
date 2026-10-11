@@ -1,0 +1,22 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  amount      Float    @db.Double
+  type        String   @db.VarChar(20) // 'income' atau 'expense'
+  category    String   @db.VarChar(100)
+  note        String?  @db.Text
+  image       String?  @db.VarChar(255) // Bukti struk/nota transfer
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("transactions")
+}
